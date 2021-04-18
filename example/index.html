@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+
+  <style>
+    body{ height: 100vh; display: flex; flex-direction: column; margin:0; }
+    p{ margin: 12px; flex-grow:1; }
+    kbd {
+      display: inline-block;
+      color: #333; background-color: #eee; 
+      border-radius: 3px; border: 1px solid #b4b4b4; box-shadow: 0 1px 1px rgba(0, 0, 0, .2), 0 2px 0 0 rgba(255, 255, 255, .7) inset;
+      font-size: .85em; font-weight: 700; line-height: 1; font-family: monospace;
+      white-space: nowrap;
+      padding: 2px 4px;
+    }
+  </style>
+
+  <!-- duplicate console content onto the html body -->
+  <script src="https://stacksnippets.net/scripts/snippet-javascript-console.min.js?v=1"></script>
+  <style>
+    .as-console-wrapper  { max-height:unset; position: unset; }
+    .as-console-row-code { white-space: nowrap; padding-left: 24px; }
+    .as-console-info     { color: blue; font-size: x-large; padding-left:unset; }
+  </style>
+
+  <script type="module" src="./index.js"></script>
+
+</head>
+<body>
+
+  <p>
+    Open the console (<kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>I</kbd>) 
+    and reload (<kbd>F5</kbd>) to be able to inspect elements in the console.
+  </p>
+
+</body>
+</html>
