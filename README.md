@@ -27,6 +27,16 @@ import BitArray from "path/to/bit-typedarray.js"
 
 const length = 32; // or whatever length value
 const bits = new BitArray( length );
+
+// the following are equivalent
+
+BitArray.from( "11001010" );
+BitArray.from( [1,1,0,0,1,0,1,0] );
+BitArray.from( [true,true,false,false,true,false,true,false] );
+
+BitArray.of( ..."11001010" );
+BitArray.of( 1,1,0,0,1,0,1,0 );
+BitArray.of( true,true,false,false,true,false,true,false );
 ```
 
 ## Reading/writing values

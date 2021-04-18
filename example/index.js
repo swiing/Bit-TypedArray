@@ -11,6 +11,9 @@ _$("Initializing");
 
     _("array is", randomArray);
     _("instanceof BitArray ==", randomArray instanceof BitArray);
+    
+    _("BitArray.from()", BitArray.from("11001010"));
+    _("BitArray.of()", BitArray.of(1,1,0,0,1,0,1,0));
 
     
 _$("Iterating");
