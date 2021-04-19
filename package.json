@@ -1,0 +1,32 @@
+{
+  "name": "@bitarray/typedarray",
+  "version": "0.1.0",
+  "description": "A BitArray object exhibiting the interface of standard ecmascript TypedArray's",
+  "main": "dist/bit-typedarray.js",
+  "type": "module",
+  "directories": {
+    "example": "example",
+    "test": "test"
+  },
+  "scripts": {
+    "build": "tsc -t ES6 --outDir dist/  src/bit-typedarray.ts",
+    "test": "node test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swiing/Bit-TypedArray.git"
+  },
+  "keywords": [
+    "bitarray",
+    "typedarray"
+  ],
+  "author": "swiing",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/swiing/Bit-TypedArray/issues"
+  },
+  "homepage": "https://github.com/swiing/Bit-TypedArray#readme",
+  "devDependencies": {
+    "typescript": "^4.2.4"
+  }
+}
