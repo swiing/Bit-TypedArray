@@ -10,9 +10,11 @@ const bits = new BitArray( length );
 
 /** suite 1 */
 const instantiating = {
-  "is instanceof BitArray": bits instanceof BitArray,
+  "new BitArray( length )": bits instanceof BitArray,
   "length is set": bits.length == length,
-  "empty bit array has length 0": new BitArray(0).length === 0
+  "empty bit array has length 0": new BitArray(0).length === 0,
+  "new BitArray( iterable )": new BitArray("011010") instanceof BitArray
+                           && new BitArray("011010").length === 6
 };
 
 

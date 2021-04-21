@@ -100,11 +100,15 @@ class BitArray {
     static BYTES_PER_ELEMENT = 1/8;
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/from
-    static from( source: any[] /*, mapFn?, thisArg?*/ ) {
-        let ret = new this( source.length );
+    static from( source: Iterable<any> /*, mapFn?, thisArg?*/ ) {
+        let length = 0;
+        for ( let _ of source ) length++;
+
+        let ret = new this( length );
         for( let i in source )
             // beware Boolean("0") === true, so make sure to convert to number first;
             ret[i] = Number( source[i] );
+
         return ret;
     }
 
@@ -128,13 +132,18 @@ class BitArray {
     // by using a proxy. The object _itself_ must be a proxy.
     // It is NOT possible to extend Proxy's. However, it is possible to return 
     // a proxy from the constructor.
-    constructor( length: number /*| any @todo */ ) {
+    constructor( arg: number /*| TypedArray @todo */ | Iterable<any> ) {
 
         let byteOffset: number = 0;
         let byteLength: number;
         let buffer: ArrayBuffer;
 
-        // for now, I only support taking a length argument
+        if( typeof arg !== "number" )
+            // assumes arg is iterable
+            return BitArray.from( arg );
+
+        // for now, I only support taking a length argument from here
+        let length = arg;
         //if( typeof length === "number" ) {
             length = Math.trunc( length ) || 0;
             if( length < 0 ) 

@@ -30,7 +30,12 @@ import BitArray from "path/to/bit-typedarray.js"
 const length = 32; // or whatever length value
 const bits = new BitArray( length );
 
-// the following are equivalent
+// Bit arrays can be created from iterables.
+// The following are all equivalent
+
+new BitArray( "11001010" );
+new BitArray( [1,1,0,0,1,0,1,0] );
+new BitArray( [true,true,false,false,true,false,true,false] );
 
 BitArray.from( "11001010" );
 BitArray.from( [1,1,0,0,1,0,1,0] );

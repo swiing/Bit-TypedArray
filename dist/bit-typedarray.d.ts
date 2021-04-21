@@ -12,7 +12,7 @@ declare class BitArray {
     length: number;
     prototype: object;
     static BYTES_PER_ELEMENT: number;
-    static from(source: any[]): BitArray;
+    static from(source: Iterable<any>): BitArray;
     static of(...items: any[]): BitArray;
     /**
      * At this stage, only the ( length ) signature is supported.
@@ -20,7 +20,7 @@ declare class BitArray {
      * @param length
      * @returns a proxy instance
      */
-    constructor(length: number);
+    constructor(arg: number | Iterable<any>);
     toString(): string;
     forEach<T>(callback: (value: bit, index: number, thisArg?: T) => any, thisArg?: this | T): void;
     at(index: number): any;
