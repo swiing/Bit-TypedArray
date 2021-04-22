@@ -1,6 +1,11 @@
 # @bitarray/typedarray
 
-A BitArray object exhibiting the interface of standard ecmascript [TypedArray](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray)'s.
+A bit array object exhibiting the interface of standard ecmascript [TypedArray](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray)'s.
+
+> :bulb: If you are looking for easily applying bitwise operations, check out [@bitarray/es6](https://github.com/swiing/BitArray),
+> which builds on top of the present library. Here, we are purposely sticking to methods 
+> and properties described by the ecmascript specification (there are no bitwise operations 
+> on arrays specified by ecmascript).
 
 ## Rationale
 
@@ -140,7 +145,7 @@ rather than a comma, to match common practice of text representation of bit sequ
 new BitArray(20).toString(); // "00000000 00000000 0000"
 ```
 
-### `.at()`method
+### `.at()` method
 
 At the time of writing this is a [proposal](https://tc39.es/proposal-relative-indexing-method/#sec-%typedarray.prototype%-additions)
 for the ecmascript specification. Hence, it is to be considered as _experimental_.
