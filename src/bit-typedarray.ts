@@ -11,14 +11,14 @@
 
 type bit = 0|1;
 
-// Everytime I need to read/write from/to the buffer, I will need a viewer.
+// Everytime we need to read/write from/to the buffer, we need a viewer.
 // It would be simple, but very inefficient to create a viewer each time. 
-// So instead, I create one (a Uint32Array instance), once for all.
-// I resort to a weakmap to allow retrieving it later on.
+// So instead, we create one (a Uint32Array instance), once for all,
+// and resort to a weakmap to allow retrieving it later on.
 const _views = new WeakMap<ArrayBuffer,Uint32Array>();
 
-// // I can make it available to the outside world so it can benefit as well.
-// // Should I prefer to keep this private, it would also be possible. 
+// // We could make it available to the outside world so it can benefit as well.
+// // Should we prefer to keep this private, it would also be possible. 
 // // In such a case, it would be up to the outside world to manage 
 // // its own instance of a viewer, e.g. if required for performance reasons.
 // export { _views };
@@ -115,7 +115,7 @@ class BitArray {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/of
     static of( ...items ) {
         // let ret = new this( items.length );
-        // for( let i in items ) ret[i] = Number( Boolean(items[i]) );
+        // for( let i in items ) ret[i] = Number( (items[i]) );
         // return ret;
         // simplified into
         return this.from( items );
@@ -142,7 +142,7 @@ class BitArray {
             // assumes arg is iterable
             return BitArray.from( arg );
 
-        // for now, I only support taking a length argument from here
+        // for now, we only support taking a length argument from here
         let length = arg;
         //if( typeof length === "number" ) {
             length = Math.trunc( length ) || 0;
@@ -164,10 +164,10 @@ class BitArray {
 
         // store once for all a viewer for this buffer (see above)
         //
-        // Note 1: I can NOT use 'this' as the key for the weakmap, because  
+        // Note 1: we can NOT use 'this' as the key for the weakmap, because  
         // here 'this' refers to the target, while later on, 'this' will refer 
-        // to the proxy (because I use a return statement in this constructor
-        // - see below). Or else, I would need to derive the proxy from the 
+        // to the proxy (because of the return statement in this constructor
+        // - see below). Or else, we would need to derive the proxy from the 
         // target  (does not look very nice).
         //
         // Note 2: this implies, if two instances of BitArray's share the same
@@ -181,7 +181,7 @@ class BitArray {
         return Reflect.construct( Proxy, [this,handlers] );
     }
 
-    // standard TypeArray's return comma-separated values. Here, I deliberately
+    // standard TypeArray's return comma-separated values. Here, we deliberately
     // choose not to include commas as it makes the string very heavy-weight,
     // for no benefit.
     toString() {
@@ -240,10 +240,10 @@ class BitArray {
 
     // cf. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/set
     //
-    // Should I enforce value to be a number, or allow anything, 
+    // Should we enforce value to be a number, or allow anything, 
     // that would coerce to a number inside the method?
     //
-    // Should I keep allowing an offset? Obviously, this is according to 
+    // Should we keep allowing an offset? Obviously, this is according to 
     // the native TypedArray's, but can it have any use for BitArrays?
     set( source: bit[], offset: number = 0 ) {
 
@@ -269,7 +269,7 @@ class BitArray {
         let  currentIndex=0;
         return {
             next: ()=>{
-                return  currentIndex < this.length ? 
+                return currentIndex < this.length ?
                             { done: false, value: this[ currentIndex++ ] }
                           : { done: true };
             }
