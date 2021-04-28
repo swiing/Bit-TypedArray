@@ -1,4 +1,4 @@
-import BitArray from "../dist/bit-typedarray.js";
+import BitArray from "../src/bit-typedarray.js";
 
 // whatever value >=4
 // Some test cases are not accounting for a zero length (and would appear as failures)
@@ -11,10 +11,10 @@ const bits = new BitArray( length );
 /** suite 1 */
 const instantiating = {
   "new BitArray( length )": bits instanceof BitArray,
-  "length is set": bits.length == length,
-  "empty bit array has length 0": new BitArray(0).length === 0,
+  "length is set": bits.length === length,
+  "empty bit array has length 0": new BitArray(0) .length === 0,
   "new BitArray( iterable )": new BitArray("011010") instanceof BitArray
-                           && new BitArray("011010").length === 6
+                           && new BitArray("011010") .length === 6
 };
 
 
@@ -35,27 +35,27 @@ const iterating = {
 
   "for loop": (()=>{
     let item, index;
-    for( let i=0; i<bits.length; i++ ) item = bits[ index=i ];
-    return (index === bits.length-1) && (item === 1);
+    for( let i=0; i<length; i++ ) item = bits[ index=i ];
+    return (index === length-1) && (item === 1);
   })(),
 
-  "for .. in loop": (()=>{
+  "for..in loop": (()=>{
     let item, index;
     for( let i in bits ) item = bits[index=i];
-    return (index === ""+(bits.length-1)) && (item === 1);
+    return (index === ""+(length-1)) && (item === 1);
   })(),
 
   ".forEach()": (()=>{
-    let item, index;
-    bits.forEach( (val, i, arr) => { index=i; item = arr[i]===val; } );
-    return (index === bits.length-1) && (item === true);
+    let res, index;
+    bits.forEach( (val, i, arr) => { index=i; res = arr[i]===val; } );
+    return (index === length-1) && (res === true);
   })(),
   
-  "for .. of loop": (()=>{
-    let item;
-    for( item of bits ) /* noop */;
-    return (item === 1);
-  })(),
+  "for..of loop": (()=>{
+    let item, index=0;
+    for( item of bits ) index++;
+    return (item===1) && (index===length);
+  })()
 
 };
 
@@ -118,4 +118,3 @@ export default {
   formatting,
   static_metods
 };
-

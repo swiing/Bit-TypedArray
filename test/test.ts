@@ -12,27 +12,34 @@ const
 
 const log = typeof window === "object"
               ? // in browser
-                function( success, text, tab ) {
+                function( success: boolean|undefined, text: string, tab: string ) {
                   success == true  ? console.log( "%c" + tab + text, BrowserSuccess )
                 : success == false ? console.log( "%c" + tab + text, BrowserFailure )
                                    : console.log( "%c" + tab + text, BrowserInfo );
                }
              : // in node
-               function( success, text, tab ) {
+                function( success: boolean|undefined, text: string, tab: string ) {
                   success == true  ? console.log( NodeSuccess + tab + text + NodeInfo )
                 : success == false ? console.log( NodeFailure + tab + text + NodeInfo )
                                    : console.log( tab + text );
                };
 
 
-export default function test( suite, tab="" ) {
+export default function test( suite: object, tab="" ) {
 
-  for( let [desc, success] of Object.entries( suite ) )
+  let success: boolean;
+
+  // for( let [desc, success] of Object.entries( suite ) ) // es2017
+  for( let desc of Object.keys( suite ) ) {
+    success = suite[desc];
+
     if( typeof success === "boolean" )
       log( success, desc, tab );
     else {
       log( undefined, desc, tab );
       test( success, tab+"\t" );
     }
+
+  }
 
 };
