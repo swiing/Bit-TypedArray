@@ -10,7 +10,7 @@
     "test": "test"
   },
   "scripts": {
-    "build": "tsc -t ES6 --declaration --outDir dist/ src/bit-typedarray.ts",
+    "build": "tsc",
     "test": "node test/index.js"
   },
   "repository": {

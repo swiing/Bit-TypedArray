@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "es2015",
+    "outDir": "dist",
+    "declaration": true
+  },
+  "files": [
+    "src/bit-typedarray.ts"
+  ]
+}
