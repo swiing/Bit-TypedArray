@@ -89,13 +89,14 @@ const handlers = {
 
 };
 
-class BitArray {
+class BitArray implements Iterable<bit> {
 
     buffer    : ArrayBuffer;
     byteLength: number;
     byteOffset: number;
     length    : number;
     prototype : object;
+    [Symbol.iterator]: ()=>Iterator<bit>;
 
     static BYTES_PER_ELEMENT = 1/8;
 
@@ -271,7 +272,7 @@ class BitArray {
             next: ()=>{
                 return currentIndex < this.length ?
                             { done: false, value: this[ currentIndex++ ] }
-                          : { done: true };
+                          : { done: true } as IteratorResult<bit>;
             }
         };
     };

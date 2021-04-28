@@ -5,12 +5,13 @@
  *  @author swiing
  */
 declare type bit = 0 | 1;
-declare class BitArray {
+declare class BitArray implements Iterable<bit> {
     buffer: ArrayBuffer;
     byteLength: number;
     byteOffset: number;
     length: number;
     prototype: object;
+    [Symbol.iterator]: () => Iterator<bit>;
     static BYTES_PER_ELEMENT: number;
     static from(source: Iterable<any>): BitArray;
     static of(...items: any[]): BitArray;
@@ -26,12 +27,9 @@ declare class BitArray {
     at(index: number): any;
     set(source: bit[], offset?: number): void;
     values(): {
-        next: () => {
+        next: () => IteratorYieldResult<bit> | {
             done: boolean;
             value: any;
-        } | {
-            done: boolean;
-            value?: undefined;
         };
     };
 }
