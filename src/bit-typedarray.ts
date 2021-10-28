@@ -97,6 +97,7 @@ class BitArray implements Iterable<bit> {
     length    : number;
     prototype : object;
     [Symbol.iterator]: ()=>Iterator<bit>;
+    [index: number]: bit;
 
     static BYTES_PER_ELEMENT = 1/8;
 
@@ -222,7 +223,7 @@ class BitArray implements Iterable<bit> {
     // by any browser for native TypedArray's.
     //
     // Inspired by https://github.com/tc39/proposal-relative-indexing-method#polyfill
-    at( index: number ) {
+    at( index: number ): bit|undefined {
         index = Math.trunc( index ) || 0;
 
         //  If a negative number is used, the element returned 

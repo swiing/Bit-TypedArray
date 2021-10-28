@@ -12,6 +12,7 @@ declare class BitArray implements Iterable<bit> {
     length: number;
     prototype: object;
     [Symbol.iterator]: () => Iterator<bit>;
+    [index: number]: bit;
     static BYTES_PER_ELEMENT: number;
     static from(source: Iterable<any>): BitArray;
     static of(...items: any[]): BitArray;
@@ -24,12 +25,12 @@ declare class BitArray implements Iterable<bit> {
     constructor(arg: number | Iterable<any>);
     toString(): string;
     forEach<T>(callback: (value: bit, index: number, thisArg?: T) => any, thisArg?: this | T): void;
-    at(index: number): any;
+    at(index: number): bit | undefined;
     set(source: bit[], offset?: number): void;
     values(): {
-        next: () => IteratorYieldResult<bit> | {
+        next: () => IteratorReturnResult<any> | IteratorYieldResult<bit> | {
             done: boolean;
-            value: any;
+            value: bit;
         };
     };
 }
