@@ -80,18 +80,18 @@ class BitArray {
         let byteOffset = 0;
         let byteLength;
         let buffer;
-        if (typeof arg !== "number")
-            // assumes arg is iterable
-            return BitArray.from(arg);
-        // for now, we only support taking a length argument from here
-        let length = arg;
-        //if( typeof length === "number" ) {
-        length = Math.trunc(length) || 0;
-        if (length < 0)
-            throw new RangeError("invalid array length");
+        let length = 0;
+        const argIsIterable = Symbol.iterator in Object(arg);
+        if (argIsIterable)
+            for (let _ of arg)
+                length++;
+        else {
+            length = Math.trunc(arg);
+            if (length < 0)
+                throw new RangeError("invalid array length");
+        }
         byteLength = ((length - 1 >> 5) + 1) * 4;
         buffer = new ArrayBuffer(byteLength);
-        //}
         // by default, properties are not writable, which is what I need
         // however, I need to have them configurable, as per https://stackoverflow.com/a/42876020
         Object.defineProperties(this, {
@@ -115,18 +115,16 @@ class BitArray {
         // case when it comes to usage of bit arrays; and such construction 
         // is not supported at this stage anyway.
         _views.set(this.buffer, new Uint32Array(this.buffer));
-        return Reflect.construct(Proxy, [this, handlers]);
+        let ret = Reflect.construct(Proxy, [this, handlers]);
+        if (argIsIterable)
+            for (let i in arg)
+                // beware Boolean("0") === true, so make sure to convert to number first;
+                ret[i] = Number(arg[i]);
+        return ret;
     }
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/from
     static from(source /*, mapFn?, thisArg?*/) {
-        let length = 0;
-        for (let _ of source)
-            length++;
-        let ret = new this(length);
-        for (let i in source)
-            // beware Boolean("0") === true, so make sure to convert to number first;
-            ret[i] = Number(source[i]);
-        return ret;
+        return new this(source);
     }
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/of
     static of(...items) {

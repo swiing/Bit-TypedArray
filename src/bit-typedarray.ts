@@ -103,15 +103,7 @@ class BitArray implements Iterable<bit> {
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/from
     static from( source: Iterable<any> /*, mapFn?, thisArg?*/ ) {
-        let length = 0;
-        for ( let _ of source ) length++;
-
-        let ret = new this( length );
-        for( let i in source )
-            // beware Boolean("0") === true, so make sure to convert to number first;
-            ret[i] = Number( source[i] );
-
-        return ret;
+        return new this( source );
     }
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/of
@@ -136,24 +128,24 @@ class BitArray implements Iterable<bit> {
     // a proxy from the constructor.
     constructor( arg: number /*| TypedArray @todo */ | Iterable<any> ) {
 
-        let byteOffset: number = 0;
+        let byteOffset = 0;
         let byteLength: number;
         let buffer: ArrayBuffer;
+        let length = 0;
 
-        if( typeof arg !== "number" )
-            // assumes arg is iterable
-            return BitArray.from( arg );
+        const argIsIterable = Symbol.iterator in Object( arg )
 
-        // for now, we only support taking a length argument from here
-        let length = arg;
-        //if( typeof length === "number" ) {
-            length = Math.trunc( length ) || 0;
+        if( argIsIterable )
+            for(let _ of arg as Iterable<any>) length++;
+        else {
+            length = Math.trunc( arg as number );
+
             if( length < 0 ) 
                 throw new RangeError("invalid array length");
-
-            byteLength = ( ( length-1 >> 5 ) + 1 ) * 4;
-            buffer = new ArrayBuffer( byteLength );
-        //}
+        }
+        
+        byteLength = ( ( length-1 >> 5 ) + 1 ) * 4;
+        buffer = new ArrayBuffer( byteLength );
 
         // by default, properties are not writable, which is what I need
         // however, I need to have them configurable, as per https://stackoverflow.com/a/42876020
@@ -180,7 +172,14 @@ class BitArray implements Iterable<bit> {
         // is not supported at this stage anyway.
         _views.set( this.buffer, new Uint32Array( this.buffer ) );
 
-        return Reflect.construct( Proxy, [this,handlers] );
+        let ret = Reflect.construct( Proxy, [this,handlers] );
+
+        if( argIsIterable )
+            for( let i in arg as Iterable<any>)
+                // beware Boolean("0") === true, so make sure to convert to number first;
+                ret[i] = Number( arg[i] );
+
+        return ret;
     }
 
     // standard TypeArray's return comma-separated values. Here, we deliberately
