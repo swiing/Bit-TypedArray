@@ -198,13 +198,12 @@ class BitArray implements Iterable<bit> {
         //         // though.
         //         .map( (b:"0"|"1", i:number) => (i+1)%8 ? b : b+" " )
         //         .join("")
-        //         .trim();
+        //         .trimEnd();
         var ret = "";
         for( let i=0; i<this.length; i++ )
             ret += String(this[i]) + ( (i+1)%8 ? "" : " " );
 
-        // trim to get rid of possibly ending space.
-        return ret.trim();
+        return ret.trimEnd();
     }
 
     forEach<T>( callback: ( value:bit, index:number, thisArg?:T ) => any, thisArg?:this|T ) {
