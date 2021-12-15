@@ -218,8 +218,7 @@ class BitArray implements Iterable<bit> {
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/at
     //
-    // Note: this is an experimental feature that is currently not supported
-    // by any browser for native TypedArray's.
+    // Note: this is an experimental feature.
     //
     // Inspired by https://github.com/tc39/proposal-relative-indexing-method#polyfill
     at( index: number ): bit|undefined {
