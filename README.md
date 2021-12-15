@@ -20,7 +20,7 @@ to store sequences of bits, while exposing the familiar, standard interface of t
 The library uses a [Proxy](https://caniuse.com/?search=Proxy) object,
 which is an ES6 (aka ES2015) feature. It can NOT be polyfilled (to the extent it is used by the library).
 
-_Note: standard `TypeArray` is also a feature of ecmascript ES6._
+_Note: standard `TypedArray` is also a feature of ecmascript ES6._
 
 ## Usage
 
@@ -150,5 +150,5 @@ new BitArray(20).toString(); // "00000000 00000000 0000"
 At the time of writing this is a [proposal](https://tc39.es/proposal-relative-indexing-method/#sec-%typedarray.prototype%-additions)
 for the ecmascript specification. Hence, it is to be considered as _experimental_.
 
-_Note: it is currently [not supported](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/at#browser_compatibility) 
-by any browser yet. So, on this specific method, we are ahead of native implementations._
+_Note: ~~it is currently [not supported](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/at#browser_compatibility) 
+by any browser yet. So, on this specific method, we are ahead of~~ now [supported](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/at#browser_compatibility) in most recent native implementations._
