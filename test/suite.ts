@@ -50,7 +50,7 @@ const iterating = {
     bits.forEach( (val, i, arr) => { index=i; res = arr[i]===val; } );
     return (index === length-1) && (res === true);
   })(),
-  
+
   "for..of loop": (()=>{
     let item, index=0;
     for( item of bits ) index++;
@@ -80,28 +80,28 @@ const static_metods = {
         && arr.length === 5
         && arr[0]===1 && arr[1]===1 && arr[2]===0 && arr[3]===0 && arr[4]===1
   })(),
-  
+
   "BitArray.from( number[] )": (()=>{
     let arr = BitArray.from( [1,1,0,0,1] );
     return arr instanceof BitArray
         && arr.length === 5
         && arr[0]===1 && arr[1]===1 && arr[2]===0 && arr[3]===0 && arr[4]===1
   })(),
-  
+
   "BitArray.from( string )": (()=>{
     let arr = BitArray.from("11001");
     return arr instanceof BitArray
         && arr.length === 5
         && arr[0]===1 && arr[1]===1 && arr[2]===0 && arr[3]===0 && arr[4]===1
   })(),
-  
+
   "BitArray.of( ...booleans )": (()=>{
     let arr = BitArray.of(true,true,false,false,true);
     return arr instanceof BitArray
         && arr.length === 5
         && arr[0]===1 && arr[1]===1 && arr[2]===0 && arr[3]===0 && arr[4]===1
   })(),
-  
+
   "BitArray.of( ...numbers )": (()=>{
     let arr = BitArray.of(1,1,0,0,1);
     return arr instanceof BitArray

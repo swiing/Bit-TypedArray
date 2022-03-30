@@ -1,5 +1,5 @@
 // style for console output formatting
-const styleHeader = new Array(200).fill(".").join("") // make sure the formatting text is not visible on the html document 
+const styleHeader = new Array(200).fill(".").join("") // make sure the formatting text is not visible on the html document
                                                       // (it is far to the right, hence overflows)
                     + "; color:blue; font-weight: bold; font-size: x-large;"
 
