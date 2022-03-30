@@ -11,6 +11,8 @@
   },
   "scripts": {
     "build": "tsc",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test",
     "test": "node --loader ts-node/esm test/index.ts"
   },
   "repository": {
@@ -28,7 +30,10 @@
   },
   "homepage": "https://github.com/swiing/Bit-TypedArray#readme",
   "devDependencies": {
-    "ts-node": "^9.1.1",
+    "ts-node": "^10.7.0",
     "typescript": "^4.2.4"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
