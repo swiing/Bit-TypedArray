@@ -2,15 +2,22 @@
   "name": "@bitarray/typedarray",
   "version": "0.3.0",
   "description": "A BitArray object exhibiting the interface of standard ecmascript TypedArray's",
-  "main": "dist/bit-typedarray.js",
-  "types": "dist/bit-typedarray.d.ts",
-  "type": "module",
+  "typings": "dist/bit-typedarray.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/bit-typedarray.js",
+      "require": "./dist/cjs/bit-typedarray.js"
+    }
+  },
   "directories": {
     "example": "example",
     "test": "test"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "npm run build:cjs && npm run build:esm && npm run build:types && bash ./scripts/build.sh",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:types": "tsc --emitDeclarationOnly -p tsconfig.json",
     "prepare": "npm run build",
     "prepublishOnly": "npm run test",
     "test": "node --loader ts-node/esm test/index.ts"

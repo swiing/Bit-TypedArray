@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "module": "es2015",
-    "outDir": "dist",
+    "declarationDir": "dist",
     "declaration": true
   },
   "files": [
