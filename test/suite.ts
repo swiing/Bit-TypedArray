@@ -1,4 +1,4 @@
-import BitArray from "../src/bit-typedarray.js";
+import BitArray from "../src/bit-typedarray";
 
 // whatever value >=4
 // Some test cases are not accounting for a zero length (and would appear as failures)

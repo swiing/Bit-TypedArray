@@ -1,4 +1,4 @@
-import suite from "./suite.js";
-import test  from "./test.js";
+import suite from "./suite";
+import test  from "./test";
 
 test( suite );
