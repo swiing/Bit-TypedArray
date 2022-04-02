@@ -1,6 +1,6 @@
 {
   "name": "@bitarray/typedarray",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "A BitArray object exhibiting the interface of standard ecmascript TypedArray's",
   "typings": "dist/bit-typedarray.d.ts",
   "exports": {
