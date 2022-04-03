@@ -8,7 +8,7 @@
 
 # @bitarray/typedarray
 
-![GitHub package.json dynamic](https://img.shields.io/github/package-json/keywords/swiing/bit-typedarray)
+[![GitHub package.json dynamic](https://img.shields.io/github/package-json/keywords/swiing/bit-typedarray)](https://github.com/swiing/Bit-TypedArray#bitarraytypedarray)
 
 A bit array object exhibiting the interface of standard ecmascript [TypedArray](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray)'s.
 
@@ -23,7 +23,7 @@ to store sequences of bits, while exposing the familiar, standard interface of t
 
 ## Compatibility
 
-![](https://img.shields.io/badge/compatibility-%3E%3D%20ES6-orange?style=flat)
+[![compatibility](https://img.shields.io/badge/compatibility-%3E%3D%20ES6-orange?style=flat)](https://github.com/swiing/Bit-TypedArray#compatibility)
 
 The library uses a [Proxy](https://caniuse.com/?search=Proxy) object, which is an ES6 (aka ES2015) feature. It can **NOT** be polyfilled (to the extent it is used by the library).
 
@@ -31,7 +31,7 @@ _Note: standard `TypedArray` is also a feature of ecmascript ES6._
 
 ## Installation
 
-[![npm version](https://badge.fury.io/js/@bitarray%2Ftypedarray.svg)](https://badge.fury.io/js/@bitarray%2Ftypedarray)
+[![npm version](https://badge.fury.io/js/@bitarray%2Ftypedarray.svg)](https://www.npmjs.com/package/@bitarray/typedarray)
 
 ```sh
 npm install @bitarray/typedarray
@@ -170,4 +170,4 @@ _Note: it is ~~currently [not supported](https://developer.mozilla.org/en-US/doc
 
 ## License
 
-![](https://img.shields.io/github/license/swiing/Bit-TypedArray)
+[![license](https://img.shields.io/github/license/swiing/Bit-TypedArray)](https://github.com/swiing/Bit-TypedArray/blob/main/LICENSE)
