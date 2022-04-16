@@ -31,7 +31,7 @@
     "typedarray"
   ],
   "author": "swiing",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/swiing/Bit-TypedArray/issues"
   },
