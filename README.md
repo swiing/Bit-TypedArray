@@ -12,7 +12,7 @@
 
 A bit array object exhibiting the interface of standard ecmascript [TypedArray](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray)'s.
 
-> :bulb: If you are looking for easily applying bitwise operations, check out [@bitarray/es6](https://github.com/swiing/BitArray), which builds on top of the present library. Here, we are purposely sticking to methods and properties described by the ecmascript specification (there are no bitwise operations on arrays specified by ecmascript).
+> :bulb: If you are looking for easily applying bitwise operations, check out [@bitarray/es6](https://github.com/swiing/BitArray), which builds on top of the present library. Here, we purposely stick to methods and properties described by the ecmascript specification (there are no bitwise operations on arrays specified by ecmascript).
 
 ## Rationale
 
@@ -50,7 +50,7 @@ Usage is same as for any standard typed array. You may check the [MDN documentat
 ### Instantiating
 
 ```js
-import BitArray from "path/to/bit-typedarray.js"
+import BitArray from "@bitarray/typedarray"
 
 const length = 32; // or whatever length value
 const bits = new BitArray(length);
