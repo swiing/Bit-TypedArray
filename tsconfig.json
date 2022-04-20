@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "declarationDir": "dist",
+    "declarationDir": "./dist/esm",
     "declaration": true
   },
   "files": [
