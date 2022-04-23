@@ -9,13 +9,13 @@
 // it should be fairly easy to implement whatever is needed from the current
 // base.
 
-type bit = 0|1;
+type bit = 0 | 1;
 
 // Everytime we need to read/write from/to the buffer, we need a viewer.
 // It would be simple, but very inefficient to create a viewer each time.
 // So instead, we create one (a Uint32Array instance), once for all,
 // and resort to a weakmap to allow retrieving it later on.
-const _views = new WeakMap<ArrayBuffer,Uint32Array>();
+const _views = new WeakMap<ArrayBuffer, Uint32Array>();
 
 // // We could make it available to the outside world so it can benefit as well.
 // // Should we prefer to keep this private, it would also be possible.
@@ -24,22 +24,22 @@ const _views = new WeakMap<ArrayBuffer,Uint32Array>();
 // export { _views };
 
 // store ownKeys computation to avoid repeating each time
-const _keys = new WeakMap<BitArray,string[]>();
+const _keys = new WeakMap<BitArray, string[]>();
 
 // for my proxy
 const handlers = {
 
-    get: function( target: BitArray, prop: string|symbol ) {
+    get: function (target: BitArray, prop: string | symbol) {
 
-        if( typeof prop === "string" ) {
-            const index = Number( prop );
-            if( index === Math.trunc(index) && index >= 0 && index < target.length ) {
-                const [intIndex, bitMask] = bitIndex2coord( index );
-                return Number( Boolean( _views.get( target.buffer )[ intIndex ] & bitMask ) );
+        if (typeof prop === "string") {
+            const index = Number(prop);
+            if (index === Math.trunc(index) && index >= 0 && index < target.length) {
+                const [intIndex, bitMask] = bitIndex2coord(index);
+                return Number(Boolean(_views.get(target.buffer)[intIndex] & bitMask));
             }
         }
 
-        return Reflect.get( target, prop );
+        return Reflect.get(target, prop);
     },
 
     // In standard typed arrays, except for the Uint8clamped type, values
@@ -47,15 +47,15 @@ const handlers = {
     // a Uint8 results in the value 1 (== 257 % 0xFF).
     // Here, any value coerced to a boolean that is truthy will result
     // in setting value 1; 0 otherwise.
-    set: function( target: BitArray, prop: string|symbol, value: bit ) {
+    set: function (target: BitArray, prop: string | symbol, value: bit) {
 
-        if( typeof prop === "string" ) {
-            const index = Number( prop );
-            if( index === Math.trunc(index) && index >= 0 && index < target.length ) {
-                const view = _views.get( target.buffer );
-                const [intIndex, bitMask] = bitIndex2coord( index );
-                view[ intIndex ] = Boolean(value) ? view[ intIndex ] | bitMask
-                                                  : view[ intIndex ] & ~bitMask;
+        if (typeof prop === "string") {
+            const index = Number(prop);
+            if (index === Math.trunc(index) && index >= 0 && index < target.length) {
+                const view = _views.get(target.buffer);
+                const [intIndex, bitMask] = bitIndex2coord(index);
+                view[intIndex] = Boolean(value) ? view[intIndex] | bitMask
+                    : view[intIndex] & ~bitMask;
                 return true;
             }
         }
@@ -66,15 +66,15 @@ const handlers = {
     // We want to be able to use e.g. for( let i in ... )
     // so ownKeys must return the indexes
     ownKeys: (target: BitArray): string[] => {
-        let keys: string[] = _keys.get( target );
+        let keys: string[] = _keys.get(target);
 
-        if( !keys )
+        if (!keys)
             // construct and store keys once for all
             _keys.set(
                 target,
-                keys = Array( target.length )
-                        .fill(void 0)
-                        .map( (_,i) => i.toString() )
+                keys = Array(target.length)
+                    .fill(void 0)
+                    .map((_, i) => i.toString())
             );
 
         return keys
@@ -82,37 +82,37 @@ const handlers = {
 
     // Needed to make ownKeys work as expected.
     // see https://javascript.info/proxy#iteration-with-ownkeys-and-getownpropertydescriptor
-    getOwnPropertyDescriptor: (/*target: BitArray, prop*/): object => ( {
-            enumerable: true,
-            configurable: true
-        })
+    getOwnPropertyDescriptor: (/*target: BitArray, prop*/): object => ({
+        enumerable: true,
+        configurable: true
+    })
 
 };
 
 class BitArray implements Iterable<bit> {
 
-    buffer    : ArrayBuffer;
+    buffer: ArrayBuffer;
     byteLength: number;
     byteOffset: number;
-    length    : number;
-    prototype : object;
-    [Symbol.iterator]: ()=>Iterator<bit>;
+    length: number;
+    prototype: object;
+    [Symbol.iterator]: () => Iterator<bit>;
     [index: number]: bit;
 
-    static BYTES_PER_ELEMENT = 1/8;
+    static BYTES_PER_ELEMENT = 1 / 8;
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/from
-    static from( source: Iterable<any> /*, mapFn?, thisArg?*/ ) {
-        return new this( source );
+    static from(source: Iterable<any> /*, mapFn?, thisArg?*/) {
+        return new this(source);
     }
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/of
-    static of( ...items ) {
+    static of(...items) {
         // let ret = new this( items.length );
         // for( let i in items ) ret[i] = Number( (items[i]) );
         // return ret;
         // simplified into
-        return this.from( items );
+        return this.from(items);
     }
 
     /**
@@ -126,34 +126,39 @@ class BitArray implements Iterable<bit> {
     // by using a proxy. The object _itself_ must be a proxy.
     // It is NOT possible to extend Proxy's. However, it is possible to return
     // a proxy from the constructor.
-    constructor( arg: number /*| TypedArray @todo */ | Iterable<any> ) {
+    constructor(data: Iterable<any> | number, byteOffset?: number, length?: number) {
 
-        let byteOffset = 0;
-        let byteLength: number;
-        let buffer: ArrayBuffer;
-        let length = 0;
-
-        const argIsIterable = Symbol.iterator in Object( arg )
-
-        if( argIsIterable )
-            for(let _ of arg as Iterable<any>) length++;
-        else {
-            length = Math.trunc( arg as number );
-
-            if( length < 0 )
-                throw new RangeError("invalid array length");
+        if (length === undefined){ 
+            if (typeof data === "number") { 
+                // only length is specified, but as argument data
+                length = data
+            } else {
+                // data is Iterable, and length is not defined.
+                length = 0;
+                for (let _ of data as Iterable<any>) length++;
+            }
         }
 
-        byteLength = ( ( length-1 >> 5 ) + 1 ) * 4;
-        buffer = new ArrayBuffer( byteLength );
+        //check for invalid lengths
+        if (length < 0) {
+            throw new RangeError("invalid array length");
+        }
+
+        // set byteOffset if it was not defined
+        if (byteOffset === undefined) {
+            byteOffset = 0;
+        }
+
+        const byteLength:number = ((length - 1 >> 5) + 1) * 4;
+        let buffer = new ArrayBuffer(byteLength);
 
         // by default, properties are not writable, which is what I need
         // however, I need to have them configurable, as per https://stackoverflow.com/a/42876020
-        Object.defineProperties( this, {
-            "byteOffset": { value: byteOffset , configurable: true },
-            "byteLength": { value: byteLength , configurable: true },
-            "buffer":     { value: buffer     , configurable: true },
-            "length":     { value: length     , configurable: true }
+        Object.defineProperties(this, {
+            "byteOffset": { value: byteOffset, configurable: true },
+            "byteLength": { value: byteLength, configurable: true },
+            "buffer": { value: buffer, configurable: true },
+            "length": { value: length-byteOffset, configurable: true }
         });
 
         // store once for all a viewer for this buffer (see above)
@@ -170,15 +175,27 @@ class BitArray implements Iterable<bit> {
         // I have not thought too much about it yet: it seems a very corner
         // case when it comes to usage of bit arrays; and such construction
         // is not supported at this stage anyway.
-        _views.set( this.buffer, new Uint32Array( this.buffer ) );
+        _views.set(this.buffer, new Uint32Array(this.buffer));
 
-        let ret = Reflect.construct( Proxy, [this,handlers] );
-
-        if( argIsIterable )
-            for( let i in arg as Iterable<any>)
-                // beware Boolean("0") === true, so make sure to convert to number first;
-                ret[i] = Number( arg[i] );
-
+        let ret = Reflect.construct(Proxy, [this, handlers]);
+        if (typeof data !== "number"){
+            for (let i = 0; i< length-byteOffset; i++){
+                if(data[i+byteOffset] === undefined || data[i+byteOffset] === null){
+                    ret[i] = Number(0)
+                } else {
+                    // beware Boolean("0") === true, so make sure to convert to number first;
+                    ret[i] = Number(data[i+byteOffset]);
+                }
+                // console.log(ret[i])
+            }
+            // for (var i in data as Iterable<any>){
+            //     // if (index < byteOffset){
+            //         ret[i] = Number(data[i]);
+            //     // }
+            //     index += 1;
+            // }
+        }
+        
         return ret;
     }
 
@@ -200,21 +217,21 @@ class BitArray implements Iterable<bit> {
         //         .join("")
         //         .trim();
         var ret = "";
-        for( let i=0; i<this.length; i++ )
-            ret += String(this[i]) + ( (i+1)%8 ? "" : " " );
+        for (let i = 0; i < this.length; i++)
+            ret += String(this[i]) + ((i + 1) % 8 ? "" : " ");
 
         // trimEnd() would be suitable but is an es2019 feature,
         // while we want to remain ES6-compatible.
         return ret.trim();
     }
 
-    forEach<T>( callback: ( value:bit, index:number, thisArg?:T ) => any, thisArg?:this|T ) {
-        if( typeof callback !== "function" )
+    forEach<T>(callback: (value: bit, index: number, thisArg?: T) => any, thisArg?: this | T) {
+        if (typeof callback !== "function")
             throw new TypeError(callback + " is not a function");
 
         thisArg = thisArg || this;
-        for( let i=0; i<this.length; i++ )
-            callback.call( thisArg, this[i], i, this );
+        for (let i = 0; i < this.length; i++)
+            callback.call(thisArg, this[i], i, this);
     }
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/at
@@ -222,15 +239,15 @@ class BitArray implements Iterable<bit> {
     // Note: this is an experimental feature.
     //
     // Inspired by https://github.com/tc39/proposal-relative-indexing-method#polyfill
-    at( index: number ): bit|undefined {
-        index = Math.trunc( index ) || 0;
+    at(index: number): bit | undefined {
+        index = Math.trunc(index) || 0;
 
         //  If a negative number is used, the element returned
         // will be found by counting back from the end of the array.
-        if( index<0 ) index += this.length;
+        if (index < 0) index += this.length;
 
         // out-of-bounds access is guaranteed to return undefined
-	    if( index<0 || index>=this.length ) return void 0;
+        if (index < 0 || index >= this.length) return void 0;
 
         // const [intIndex, bitMask] = bitIndex2coord( index );
         // return Number( _views.get( this.buffer )[ intIndex ] & bitMask );
@@ -246,33 +263,33 @@ class BitArray implements Iterable<bit> {
     //
     // Should we keep allowing an offset? Obviously, this is according to
     // the native TypedArray's, but can it have any use for BitArrays?
-    set( source: bit[], offset: number = 0 ) {
+    set(source: bit[], offset: number = 0) {
 
-        if( offset<0 || offset>=this.length )
+        if (offset < 0 || offset >= this.length)
             throw new RangeError("invalid or out-of-range index");
 
-        if( offset+source.length > this.length )
+        if (offset + source.length > this.length)
             throw new RangeError("source array is too long");
 
         // const view = _views.get( this.buffer );
 
-        for( let i=0; i<source.length; i++ ) {
+        for (let i = 0; i < source.length; i++) {
             // const [intIndex, bitMask] = bitIndex2coord( offset+i );
             // view[ intIndex ] = source[i] ? view[ intIndex ] | bitMask
             //                              : view[ intIndex ] & ~bitMask;
             // the above can be simplified as follows
             // (avoids duplication of code, though less performant)
-            this[offset+i] = source[i];
+            this[offset + i] = source[i];
         }
     }
 
-    values(){
-        let  currentIndex=0;
+    values() {
+        let currentIndex = 0;
         return {
-            next: ()=>{
+            next: () => {
                 return currentIndex < this.length ?
-                            { done: false, value: this[ currentIndex++ ] }
-                          : { done: true } as IteratorResult<bit>;
+                    { done: false, value: this[currentIndex++] }
+                    : { done: true } as IteratorResult<bit>;
             }
         };
     };
@@ -286,10 +303,10 @@ class BitArray implements Iterable<bit> {
  * @returns the Uint32 index and bit mask that can be used by a Uint32 viewer
  * to access the index'th value of the bit array.
  */
- function bitIndex2coord( index: number ): [number, number] {
+function bitIndex2coord(index: number): [number, number] {
     return [
         index >> 5,         // divide by 32
-        1 << ( index & 31 ) // modulo 32
+        1 << (index & 31) // modulo 32
     ];
 }
 

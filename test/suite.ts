@@ -12,11 +12,17 @@ const bits = new BitArray( length );
 const instantiating = {
   "new BitArray( length )": bits instanceof BitArray,
   "length is set": bits.length === length,
-  "empty bit array has length 0": new BitArray(0) .length === 0,
+  "empty bit array has length 0": new BitArray(0).length === 0,
+  "new BitArray instanceof BitArray": new BitArray("011010") instanceof BitArray,
+  "new BitArray(iterable) has correct length": new BitArray("011010").length === 6, 
+  "new BitArray(iterable) sets correct values": new BitArray("011010").toString() === "011010", 
+  "new BitArray(iterable,offset,length) sets correct values": new BitArray("011010",0,6).toString() === "011010", 
+
+  "new BitArray(iterable,offset,length) has correct length": new BitArray("011010",0,9).length === 9, 
+  "new BitArray(iterable,offset,length) with offset has correct length": new BitArray("011010",2,10).length === 8, 
   "new BitArray( iterable )": new BitArray("011010") instanceof BitArray
                            && new BitArray("011010") .length === 6
 };
-
 
 /** suite 2 */
 const reading_writing = {
