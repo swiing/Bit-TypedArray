@@ -19,11 +19,10 @@ const instantiating = {
   "new BitArray(iterable,offset,length) sets correct values": new BitArray("011010",0,6).toString() === "011010", 
 
   "new BitArray(iterable,offset,length) has correct length": new BitArray("011010",0,9).length === 9, 
-  "new BitArray(iterable,offset,length) with offset has correct length": new BitArray("011010",2,10).length === 8, 
+  "new BitArray(iterable,offset,length) with offset has correct length": new BitArray("1010101001101010",1,16).length === 8, 
   "new BitArray( iterable )": new BitArray("011010") instanceof BitArray
                            && new BitArray("011010") .length === 6
 };
-
 /** suite 2 */
 const reading_writing = {
   "default value set to 0": bits[0] === 0 && bits[length-1] === 0,

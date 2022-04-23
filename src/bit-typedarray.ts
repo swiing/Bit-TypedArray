@@ -131,7 +131,7 @@ class BitArray implements Iterable<bit> {
         if (length === undefined){ 
             if (typeof data === "number") { 
                 // only length is specified, but as argument data
-                length = data
+                length = data;
             } else {
                 // data is Iterable, and length is not defined.
                 length = 0;
@@ -143,13 +143,24 @@ class BitArray implements Iterable<bit> {
         if (length < 0) {
             throw new RangeError("invalid array length");
         }
-
+        
         // set byteOffset if it was not defined
         if (byteOffset === undefined) {
             byteOffset = 0;
         }
+        
+        // although there is much less utility to having a byte offset with a boolean 
+        // TypedArray, in order to maintain consistency with the target 
+        // the byteOffset must be converted to a bitOffset
+        const bitOffset = 8*byteOffset;
 
-        const byteLength:number = ((length - 1 >> 5) + 1) * 4;
+        const byteLength:number = Math.ceil(Math.ceil(length/8 - byteOffset)/4)*4
+
+        // if the byteoffset is longer than length, then throw and error
+        if (bitOffset >= length && bitOffset > 0){
+            throw new RangeError("invalid byteOffset");
+        }
+
         let buffer = new ArrayBuffer(byteLength);
 
         // by default, properties are not writable, which is what I need
@@ -158,7 +169,7 @@ class BitArray implements Iterable<bit> {
             "byteOffset": { value: byteOffset, configurable: true },
             "byteLength": { value: byteLength, configurable: true },
             "buffer": { value: buffer, configurable: true },
-            "length": { value: length-byteOffset, configurable: true }
+            "length": { value: length-bitOffset, configurable: true }
         });
 
         // store once for all a viewer for this buffer (see above)
@@ -179,21 +190,14 @@ class BitArray implements Iterable<bit> {
 
         let ret = Reflect.construct(Proxy, [this, handlers]);
         if (typeof data !== "number"){
-            for (let i = 0; i< length-byteOffset; i++){
-                if(data[i+byteOffset] === undefined || data[i+byteOffset] === null){
-                    ret[i] = Number(0)
+            for (let i = 0; i< length-bitOffset; i++){
+                if(data[i+bitOffset] === undefined || data[i+bitOffset] === null){
+                    ret[i] = Number(0);
                 } else {
                     // beware Boolean("0") === true, so make sure to convert to number first;
-                    ret[i] = Number(data[i+byteOffset]);
+                    ret[i] = Number(data[i+bitOffset]);
                 }
-                // console.log(ret[i])
             }
-            // for (var i in data as Iterable<any>){
-            //     // if (index < byteOffset){
-            //         ret[i] = Number(data[i]);
-            //     // }
-            //     index += 1;
-            // }
         }
         
         return ret;
