@@ -20,6 +20,8 @@
     "build:types": "tsc --emitDeclarationOnly -p tsconfig.json",
     "prepare": "npm run build",
     "prepublishOnly": "npm run test",
+    "style:fix": "prettier src/**/*.ts --write",
+    "style:check": "prettier src/**/*.ts --check",
     "test": "node --loader ts-node/esm test/index.ts"
   },
   "repository": {
@@ -37,6 +39,7 @@
   },
   "homepage": "https://github.com/swiing/Bit-TypedArray#readme",
   "devDependencies": {
+    "prettier": "2.6.2",
     "ts-node": "^10.7.0",
     "typescript": "^4.2.4"
   },
