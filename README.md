@@ -133,7 +133,7 @@ BitArray.prototype;         // Object {...}
 
 For the most part, mapping the behaviour of standard _methods_ and _properties_ to the case of bit arrays is obvious. There are a few caveats though.
 
-_Note: not all features of the specification are implemented yet **[WIP; PRs welcome!]**._
+_Note: not all features of the specification are implemented yet **[[WIP](https://github.com/swiing/Bit-TypedArray/issues/3); PRs welcome!]**._
 
 ### Setting values
 
