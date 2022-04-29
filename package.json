@@ -18,6 +18,7 @@
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.esm.json",
     "build:types": "tsc --emitDeclarationOnly -p tsconfig.json",
+    "example": "NODE_OPTIONS=\"--experimental-vm-modules --no-warnings\" node example/index.mjs",
     "prepare": "npm run build",
     "prepublishOnly": "npm run test",
     "style:fix": "prettier src/**/*.ts --write",
