@@ -1,5 +1,5 @@
-import BitArray from "../dist/bit-typedarray.js";
-import { log as _, logHeader as _$ } from "./util.js";
+import BitArray from "../dist/esm/bit-typedarray.js";
+import { log as _, logHeader as _$ } from "./util.mjs";
 
 const len = 48; // choose any integer value
 
