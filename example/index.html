@@ -15,6 +15,12 @@
     }
   </style>
 
+  <!-- make sure relative paths will work ok -->
+  <script>
+    if (/example$/.test(document.location.pathname))
+      document.location += "/"
+  </script>
+
   <!-- duplicate console content onto the html body -->
   <script src="https://stacksnippets.net/scripts/snippet-javascript-console.min.js?v=1"></script>
   <style>
