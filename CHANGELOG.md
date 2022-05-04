@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD036 -->
+
 # @bitarray/typedarray ChangeLog
 
 ## v1.0.3

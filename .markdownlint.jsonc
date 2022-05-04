@@ -1,0 +1,10 @@
+{
+    "default": true,
+    // keep VSCode default of no line-length limit
+    // https://github.com/DavidAnson/vscode-markdownlint#markdownlintconfig
+    "MD013": false,
+    // those have been deprecated
+    // https://github.com/DavidAnson/vscode-markdownlint#configure
+    "MD002": false,
+    "MD006": false
+}
