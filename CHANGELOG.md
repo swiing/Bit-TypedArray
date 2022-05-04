@@ -1,5 +1,18 @@
 # @bitarray/typedarray ChangeLog
 
+## v1.0.3
+
+_2022-05-04_
+
+- chore: add github actions for testing ([54c7aa9](https://github.com/swiing/Bit-TypedArray/commit/54c7aa9244bee3b1949a8b34ecccea45f1c69008)), styling ([8c9bdfa](https://github.com/swiing/Bit-TypedArray/commit/8c9bdfaba321b4987cb17eb151f06190aaf3c70e)) and dependabot ([0410dee](https://github.com/swiing/Bit-TypedArray/commit/0410deeeed0466bc651fc9af384337a6233ee0e5))
+- chore: update gitignore ([90749f1](https://github.com/swiing/Bit-TypedArray/commit/90749f12d45d79f1c23b8d587b93e5f4ffea412e))
+- chore: run example from script
+- build: move creation of package.json to postbuild
+- chore: delete .gitattributes
+- syle: add and run prettier
+- docs: reference WIP
+- fix: correct path and base url in example
+
 ## v1.0.2
 
 _2022-04-20_
