@@ -2,9 +2,9 @@ name: conformance with Prettier
 
 on:
   push:
-    branches: [ main ]
+    paths: [ 'src/**.ts', '.prettierrc.json' ]
   pull_request:
-    branches: [ main ]
+    paths: [ 'src/**.ts', '.prettierrc.json' ]
 
 jobs:
   prettier:
