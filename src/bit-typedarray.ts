@@ -305,4 +305,4 @@ BitArray.prototype[Symbol.iterator] = BitArray.prototype.values;
 // Object.setPrototypeOf( BitArray.prototype , Object.getPrototypeOf(Int8Array).prototype );
 
 export default BitArray;
-// eof bit-typedarray
+export { bit };
