@@ -87,7 +87,7 @@ const handlers = {
 };
 
 class BitArray implements Iterable<bit> {
-  buffer: ArrayBuffer;
+  buffer: ArrayBufferLike;
   byteLength: number;
   byteOffset: number;
   length: number;
@@ -125,7 +125,7 @@ class BitArray implements Iterable<bit> {
   constructor(arg: number /*| TypedArray @todo */ | Iterable<any>) {
     let byteOffset = 0;
     let byteLength: number;
-    let buffer: ArrayBuffer;
+    let buffer: ArrayBufferLike;
     let length = 0;
 
     const argIsIterable = Symbol.iterator in Object(arg);
@@ -174,6 +174,9 @@ class BitArray implements Iterable<bit> {
     return ret;
   }
 
+  /**
+   * Returns a string representation of an array.
+   */
   // standard TypeArray's return comma-separated values. Here, we deliberately
   // choose not to include commas as it makes the string very heavy-weight,
   // for no benefit.
@@ -200,16 +203,23 @@ class BitArray implements Iterable<bit> {
     return ret.trim();
   }
 
-  forEach<T>(
-    callback: (value: bit, index: number, thisArg?: T) => any,
-    thisArg?: this | T
-  ) {
-    if (typeof callback !== 'function')
-      throw new TypeError(callback + ' is not a function');
+  /**
+   * Performs the specified action for each element in an array.
+   * @param callbackfn  A function that accepts up to three arguments. forEach calls the
+   * callbackfn function one time for each element in the array.
+   * @param thisArg  An object to which the this keyword can refer in the callbackfn function.
+   * If thisArg is omitted, undefined is used as the this value.
+   */
+  forEach(
+    callbackfn: (value: bit, index: number, array: BitArray) => void,
+    thisArg?: any
+  ): void {
+    if (typeof callbackfn !== 'function')
+      throw new TypeError(callbackfn + ' is not a function');
 
-    thisArg = thisArg || this;
+    thisArg = thisArg || undefined;
     for (let i = 0; i < this.length; i++)
-      callback.call(thisArg, this[i], i, this);
+      callbackfn.call(thisArg, this[i], i, this);
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/at
@@ -234,6 +244,11 @@ class BitArray implements Iterable<bit> {
     return this[index];
   }
 
+  /**
+   * Sets a value or an array of values.
+   * @param array A typed or untyped array of values to set.
+   * @param offset The index in the current array at which the values are to be written.
+   */
   // cf. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/set
   //
   // Should we enforce value to be a number, or allow anything,
@@ -241,22 +256,22 @@ class BitArray implements Iterable<bit> {
   //
   // Should we keep allowing an offset? Obviously, this is according to
   // the native TypedArray's, but can it have any use for BitArrays?
-  set(source: bit[], offset: number = 0) {
+  set(array: ArrayLike<bit>, offset: number = 0) {
     if (offset < 0 || offset >= this.length)
       throw new RangeError('invalid or out-of-range index');
 
-    if (offset + source.length > this.length)
+    if (offset + array.length > this.length)
       throw new RangeError('source array is too long');
 
     // const view = _views.get( this.buffer );
 
-    for (let i = 0; i < source.length; i++) {
+    for (let i = 0; i < array.length; i++) {
       // const [intIndex, bitMask] = bitIndex2coord( offset+i );
-      // view[ intIndex ] = source[i] ? view[ intIndex ] | bitMask
-      //                              : view[ intIndex ] & ~bitMask;
+      // view[ intIndex ] = array[i] ? view[ intIndex ] | bitMask
+      //                             : view[ intIndex ] & ~bitMask;
       // the above can be simplified as follows
       // (avoids duplication of code, though less performant)
-      this[offset + i] = source[i];
+      this[offset + i] = array[i];
     }
   }
 
