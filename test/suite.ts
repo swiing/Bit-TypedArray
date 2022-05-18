@@ -21,9 +21,12 @@ const instantiating = {
 /** suite 2 */
 const reading_writing = {
   "default value set to 0": bits[0] === 0 && bits[length-1] === 0,
+  // @ts-ignore
+  "bits[n] = true sets bit value to 1": (bits[length-1] = true, bits[length-1] === 1),
   "bits[n] = 1 sets bit value to 1": (bits[length-1] = 1, bits[length-1] === 1),
   ".at(n)": bits.at(length-1) === 1,
   // this test assumes a minimal length, otherwise we don't run and simply return "pass ok".
+  ".set([true,false], 2)": length < 4 ? true : (bits.set([true,false], 2), bits[2]===1 && bits[3]===0),
   ".set([1,1], 2)": length < 4 ? true : (bits.set([1,1], 2), bits[2]===1 && bits[3]===1)
 };
 

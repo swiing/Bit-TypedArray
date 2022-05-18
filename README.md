@@ -79,6 +79,10 @@ bits[1] = 1;
 bits[1]; // 1
 bits.at(1); // 1
 
+// can also take boolean values
+// (will be coerced to bit)
+bits[1] = false;
+bits.at(1); // 0
 ```
 
 ### Iterating
@@ -147,6 +151,10 @@ let arr = new BitArray(2);
 // one would normally set values like this
 arr[0] = 0;
 arr[1] = 1;
+
+// or using booleans:
+arr[0] = false;
+arr[1] = true;
 
 // this will also work
 arr[0] = -.000001; // arr[0] === 1, because Boolean(-.000001) === true

@@ -45,7 +45,7 @@ const handlers = {
   // a Uint8 results in the value 1 (== 257 % 0xFF).
   // Here, any value coerced to a boolean that is truthy will result
   // in setting value 1; 0 otherwise.
-  set: function (target: BitArray, prop: string | symbol, value: bit) {
+  set: function (target: BitArray, prop: string | symbol, value: bit|boolean) {
     if (typeof prop === 'string') {
       const index = Number(prop);
       if (index === Math.trunc(index) && index >= 0 && index < target.length) {
@@ -256,7 +256,7 @@ class BitArray implements Iterable<bit> {
   //
   // Should we keep allowing an offset? Obviously, this is according to
   // the native TypedArray's, but can it have any use for BitArrays?
-  set(array: ArrayLike<bit>, offset: number = 0) {
+  set(array: ArrayLike<bit>|ArrayLike<boolean>, offset: number = 0) {
     if (offset < 0 || offset >= this.length)
       throw new RangeError('invalid or out-of-range index');
 
@@ -271,6 +271,8 @@ class BitArray implements Iterable<bit> {
       //                             : view[ intIndex ] & ~bitMask;
       // the above can be simplified as follows
       // (avoids duplication of code, though less performant)
+      //
+      // @ts-ignore (the proxy handler will manage the case array[i] is a boolean)
       this[offset + i] = array[i];
     }
   }
