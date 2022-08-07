@@ -5,6 +5,7 @@
   "typings": "./dist/esm/bit-typedarray.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/esm/bit-typedarray.d.ts",
       "import": "./dist/esm/bit-typedarray.js",
       "require": "./dist/cjs/bit-typedarray.js"
     }
