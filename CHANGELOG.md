@@ -2,6 +2,15 @@
 
 # @bitarray/typedarray ChangeLog
 
+## v1.1.1
+
+_2022-08-07_
+
+- fix: path to .d.ts types file (for node v18?)
+- style: run prettier
+- chore: add .vscode for automatic prettier run
+- build: bump dependency version
+
 ## v1.1.0
 
 _2022-05-18_
