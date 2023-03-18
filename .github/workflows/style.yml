@@ -2,9 +2,9 @@ name: conformance with Prettier
 
 on:
   push:
-    paths: [ 'src/**.ts', '.prettierrc.json' ]
+    paths: ['src/**.ts', '.prettierrc.json']
   pull_request:
-    paths: [ 'src/**.ts', '.prettierrc.json' ]
+    paths: ['src/**.ts', '.prettierrc.json']
 
 jobs:
   prettier:
@@ -16,6 +16,6 @@ jobs:
           node-version: '16'
           cache: 'npm'
       - name: Install dependencies
-        run: npm ci
+        run: npm install # npm ci
       - name: Run prettier
         run: npm run style:check
