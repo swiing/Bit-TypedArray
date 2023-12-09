@@ -2,6 +2,7 @@
   "name": "@bitarray/typedarray",
   "version": "1.1.1",
   "description": "A BitArray object exhibiting the interface of standard ecmascript TypedArray's",
+  "type": "module",
   "typings": "./dist/esm/bit-typedarray.d.ts",
   "exports": {
     ".": {
@@ -25,7 +26,8 @@
     "prepublishOnly": "npm run test",
     "style:fix": "prettier src/**/*.ts --write",
     "style:check": "prettier src/**/*.ts --check",
-    "test": "node --loader ts-node/esm test/index.ts"
+    "test": "ts-node --esm --project ./tsconfig.esm.json ./test/index.ts",
+    "test:ci": "set TS_NODE_PROJECT=./tsconfig.esm.json && node --no-warnings=ExperimentalWarning --loader ts-node/esm ./test/index.ts"
   },
   "repository": {
     "type": "git",
