@@ -1,10 +1,13 @@
 {
   "compilerOptions": {
     "target": "es6",
+    "moduleResolution": "node",
     "declarationDir": "./dist/esm",
-    "declaration": true
+    "declaration": true,
+    "module": "es6",
+    "outDir": "dist/esm/",
+    "esModuleInterop": true
   },
-  "files": [
-    "src/bit-typedarray.ts"
-  ]
+  "ts-node": { "esm": true },
+  "files": ["src/bit-typedarray.ts"]
 }
