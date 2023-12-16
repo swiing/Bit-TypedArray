@@ -169,13 +169,6 @@ The standard method returns a comma-separated list of numbers. In the case of bi
 new BitArray(20).toString(); // "00000000 00000000 0000"
 ```
 
-### `.at()` method
-
-At the time of writing this is a [proposal](https://tc39.es/proposal-relative-indexing-method/#sec-%typedarray.prototype%-additions)
-for the ecmascript specification. Hence, it is to be considered as _experimental_.
-
-_Note: it is ~~currently [not supported](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/at#browser_compatibility) by any browser yet. So, on this specific method, we are ahead of~~ now [supported](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/at#browser_compatibility) in most recent native implementations._
-
 ## License
 
 [![license](https://img.shields.io/github/license/swiing/Bit-TypedArray)](https://github.com/swiing/Bit-TypedArray/blob/main/LICENSE)
