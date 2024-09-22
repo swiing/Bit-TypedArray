@@ -26,7 +26,7 @@
     "prepublishOnly": "npm run test",
     "style:fix": "prettier src/**/*.ts --write",
     "style:check": "prettier src/**/*.ts --check",
-    "test": "ts-node --esm --project ./tsconfig.esm.json ./test/index.ts",
+    "test": "node --test --loader ts-node/esm ./test/index.ts",
     "test:ci": "set TS_NODE_PROJECT=./tsconfig.esm.json && node --no-warnings=ExperimentalWarning --loader ts-node/esm ./test/index.ts"
   },
   "repository": {
