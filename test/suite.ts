@@ -84,7 +84,7 @@ const formatting = {
 };
 
 /** suite 5 */
-const static_metods = {
+const static_methods = {
   'BitArray.from( boolean[] )': (() => {
     let arr = BitArray.from([true, true, false, false, true]);
     return (
@@ -156,5 +156,5 @@ export default {
   reading_writing,
   iterating,
   formatting,
-  static_metods,
+  static_methods,
 };
