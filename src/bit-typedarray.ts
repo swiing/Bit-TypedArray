@@ -15,7 +15,7 @@ type bit = 0 | 1;
 // It would be simple, but very inefficient to create a viewer each time.
 // So instead, we create one (a Uint32Array instance), once for all,
 // and resort to a weakmap to allow retrieving it later on.
-const _views = new WeakMap<ArrayBuffer, Uint32Array>();
+const _views = new WeakMap<ArrayBufferLike, Uint32Array>();
 
 // // We could make it available to the outside world so it can benefit as well.
 // // Should we prefer to keep this private, it would also be possible.
@@ -95,8 +95,9 @@ class BitArray implements Iterable<bit> {
   byteLength: number;
   byteOffset: number;
   length: number;
-  prototype: object;
-  [Symbol.iterator]: () => Iterator<bit>;
+  readonly prototype: BitArray;
+  // @ts-expect-error: Function implementation comes later down in the file.
+  [Symbol.iterator](): ArrayIterator<bit>;
   [index: number]: bit;
 
   static BYTES_PER_ELEMENT = 1 / 8;
@@ -190,7 +191,7 @@ class BitArray implements Iterable<bit> {
     //         .map( String )
     //         // add one space between each byte - it could be argued
     //         // if this is the right thing to do. I think it replaces
-    //         // nicely the comma in the native TypedArry's toString()
+    //         // nicely the comma in the native TypedArray's toString()
     //         // since here we are looking at bits.
     //         // Most obvious alternative would probably be to remove
     //         // completely this line. It is hard to read for a human,
@@ -289,7 +290,7 @@ class BitArray implements Iterable<bit> {
           ? { done: false, value: this[currentIndex++] }
           : ({ done: true } as IteratorResult<bit>);
       },
-    };
+    } as ArrayIterator<bit>;
   }
 }
 
@@ -326,4 +327,4 @@ BitArray.prototype[Symbol.iterator] = BitArray.prototype.values;
 // Object.setPrototypeOf( BitArray.prototype , Object.getPrototypeOf(Int8Array).prototype );
 
 export default BitArray;
-export { bit };
+export type { bit };
