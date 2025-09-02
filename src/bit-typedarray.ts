@@ -15,7 +15,7 @@ type bit = 0 | 1;
 // It would be simple, but very inefficient to create a viewer each time.
 // So instead, we create one (a Uint32Array instance), once for all,
 // and resort to a weakmap to allow retrieving it later on.
-const _views = new WeakMap<ArrayBufferLike, Uint32Array>();
+const _views = new WeakMap<ArrayBuffer, Uint32Array>();
 
 // // We could make it available to the outside world so it can benefit as well.
 // // Should we prefer to keep this private, it would also be possible.
@@ -91,7 +91,7 @@ const handlers = {
 };
 
 class BitArray implements Iterable<bit> {
-  buffer: ArrayBufferLike;
+  buffer: ArrayBuffer;
   byteLength: number;
   byteOffset: number;
   length: number;
@@ -130,7 +130,7 @@ class BitArray implements Iterable<bit> {
   constructor(arg: number /*| TypedArray @todo */ | Iterable<any>) {
     let byteOffset = 0;
     let byteLength: number;
-    let buffer: ArrayBufferLike;
+    let buffer: ArrayBuffer;
     let length = 0;
 
     const argIsIterable = Symbol.iterator in Object(arg);
