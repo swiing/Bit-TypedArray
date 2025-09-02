@@ -2,6 +2,22 @@
 
 # @bitarray/typedarray ChangeLog
 
+## v1.1.2
+
+_2025-09-02_
+
+- fix: update dependency version
+- fix: buffer type
+- fix: test script for node v2x
+- fix: testing scripts
+- docs: switch to markdown extension for tip
+- docs: at() method is no more experimental
+- ci: drop node 16 and windows in ci
+- chore: drop nodejs v14, v16, v18, add nodejs v20, v22, v24
+- chore: full npm install in github action
+- chore: update dependencies
+- build: bump dependency versions
+
 ## v1.1.1
 
 _2022-08-07_
