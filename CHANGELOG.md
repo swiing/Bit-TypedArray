@@ -2,6 +2,12 @@
 
 # @bitarray/typedarray ChangeLog
 
+## v1.1.3
+
+_2025-10-28_
+
+- chore: run `npm update`
+
 ## v1.1.2
 
 _2025-09-02_
