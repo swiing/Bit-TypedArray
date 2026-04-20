@@ -46,7 +46,7 @@
   "devDependencies": {
     "prettier": "3.8.1",
     "ts-node": "^10.7.0",
-    "typescript": "^5.0.2"
+    "typescript": "^6.0.3"
   },
   "files": [
     "dist"
