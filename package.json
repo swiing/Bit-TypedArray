@@ -20,14 +20,14 @@
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.esm.json",
     "build:types": "tsc --emitDeclarationOnly -p tsconfig.json",
-    "example": "NODE_OPTIONS=\"--experimental-vm-modules --no-warnings\" node example/index.mjs",
+    "example": "node example/index.mjs",
     "postbuild": "bash ./scripts/postbuild.sh",
     "prepare": "npm run build",
     "prepublishOnly": "npm run test",
     "style:fix": "prettier src/**/*.ts --write",
     "style:check": "prettier src/**/*.ts --check",
-    "test": "node --test --loader ts-node/esm ./test/index.ts",
-    "test:ci": "set TS_NODE_PROJECT=./tsconfig.esm.json && node --no-warnings=ExperimentalWarning --loader ts-node/esm ./test/index.ts"
+    "test": "node --test ./test/index.ts",
+    "test:ci": "set TS_NODE_PROJECT=./tsconfig.esm.json && node ./test/index.ts"
   },
   "repository": {
     "type": "git",
@@ -45,7 +45,6 @@
   "homepage": "https://github.com/swiing/Bit-TypedArray#readme",
   "devDependencies": {
     "prettier": "3.8.1",
-    "ts-node": "^10.7.0",
     "typescript": "^5.0.2"
   },
   "files": [

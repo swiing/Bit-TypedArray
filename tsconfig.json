@@ -8,6 +8,5 @@
     "outDir": "dist/esm/",
     "esModuleInterop": true
   },
-  "ts-node": { "esm": true },
   "files": ["src/bit-typedarray.ts"]
 }

@@ -1,4 +1,4 @@
-import suite from './suite.js';
-import test from './test.js';
+import suite from './suite.ts';
+import test from './test.ts';
 
 test(suite);
