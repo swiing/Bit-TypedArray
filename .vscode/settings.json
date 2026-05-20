@@ -4,5 +4,7 @@
   "editor.guides.bracketPairs": "active",
 
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+
+  "js/ts.tsdk": "node_modules/typescript/lib"
 }

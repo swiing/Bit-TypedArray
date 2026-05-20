@@ -33,7 +33,7 @@ const handlers = {
       const index = Number(prop);
       if (index === Math.trunc(index) && index >= 0 && index < target.length) {
         const [intIndex, bitMask] = bitIndex2coord(index);
-        return Number(Boolean(_views.get(target.buffer)[intIndex] & bitMask));
+        return Number(Boolean(_views.get(target.buffer)![intIndex] & bitMask));
       }
     }
 
@@ -53,7 +53,7 @@ const handlers = {
     if (typeof prop === 'string') {
       const index = Number(prop);
       if (index === Math.trunc(index) && index >= 0 && index < target.length) {
-        const view = _views.get(target.buffer);
+        const view = _views.get(target.buffer)!;
         const [intIndex, bitMask] = bitIndex2coord(index);
         view[intIndex] = Boolean(value)
           ? view[intIndex] | bitMask
@@ -68,7 +68,7 @@ const handlers = {
   // We want to be able to use e.g. for( let i in ... )
   // so ownKeys must return the indexes
   ownKeys: (target: BitArray): string[] => {
-    let keys: string[] = _keys.get(target);
+    let keys = _keys.get(target);
 
     if (!keys)
       // construct and store keys once for all
@@ -91,11 +91,11 @@ const handlers = {
 };
 
 class BitArray implements Iterable<bit> {
-  buffer: ArrayBuffer;
-  byteLength: number;
-  byteOffset: number;
-  length: number;
-  readonly prototype: BitArray;
+  declare buffer: ArrayBuffer;
+  declare byteLength: number;
+  declare byteOffset: number;
+  declare length: number;
+  declare readonly prototype: BitArray;
   // @ts-expect-error: Function implementation comes later down in the file.
   [Symbol.iterator](): ArrayIterator<bit>;
   [index: number]: bit;
@@ -108,7 +108,7 @@ class BitArray implements Iterable<bit> {
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/of
-  static of(...items) {
+  static of(...items: bit[] | boolean[] | number[]) {
     // let ret = new this( items.length );
     // for( let i in items ) ret[i] = Number( (items[i]) );
     // return ret;
@@ -174,7 +174,9 @@ class BitArray implements Iterable<bit> {
 
     if (argIsIterable)
       // beware Boolean("0") === true, so make sure to convert to number first;
-      for (let i in arg as Iterable<any>) ret[i] = Number(arg[i]);
+      for (let i in arg as Iterable<any>)
+        // @ts-ignore arg[i] is (implicitly) of type any, and that is fine
+        ret[i] = Number(arg[i]);
 
     return ret;
   }
